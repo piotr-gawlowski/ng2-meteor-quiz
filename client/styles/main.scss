@@ -1,5 +1,7 @@
 @import "bootstrap/bootstrap-flex";
 
+@import ".constants";
+
 body {
-  color: #F00;
+  background: $green;
 }
