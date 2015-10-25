@@ -19,3 +19,5 @@ urigo:angular2-meteor
 acemtp:accounts-slack
 service-configuration
 fourseven:scss
+accounts-oauth
+accounts-base

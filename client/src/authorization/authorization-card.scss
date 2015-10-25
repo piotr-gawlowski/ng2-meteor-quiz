@@ -1,0 +1,22 @@
+
+.authorization-card {
+  margin: 0 auto;
+  top: 15vh;
+  button {
+    margin-top: 5rem;
+    width: 100%;
+  }
+  .card-block {
+    padding: 1.25rem 1.25rem 2.0rem;
+  }
+  .loader {
+    position: relative;
+    top: 2rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    &.active {
+      max-height: 2rem;
+    }
+  }
+}

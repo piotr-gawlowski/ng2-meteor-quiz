@@ -1,10 +1,11 @@
-<div>
-    <div class="card">
-        <img class="card-img-top" data-src="holder.js/100%x180/" alt="Card image cap">
+<div style="display: flex">
+    <div class="card card-raised col-xs-12 col-sm-6 col-lg-4 authorization-card">
+        <img class="img-responsive" src="/img/slack_rgb.png" alt="Slack">
+        <div class="loader" [ng-class]="{active: processing}">
+            <div></div><div></div><div></div>
+        </div>
         <div class="card-block">
-            <h4 class="card-title">Card title</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Button</a>
+            <button [disabled]="processing" (click)="slackAuth()" class="btn btn-primary">Authorize with Slack</button>
         </div>
     </div>
 </div>

@@ -170,6 +170,7 @@ declare module Meteor {
 	function loginWithMeetup(options?: Meteor.LoginWithExternalServiceOptions, callback?: Function): void;
 	function loginWithTwitter(options?: Meteor.LoginWithExternalServiceOptions, callback?: Function): void;
 	function loginWithWeibo(options?: Meteor.LoginWithExternalServiceOptions, callback?: Function): void;
+	function loginWithSlack(options?: Meteor.LoginWithExternalServiceOptions, callback?: Function): void;
 
 	interface SubscriptionHandle {
 		stop(): void;
