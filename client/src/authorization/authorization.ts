@@ -1,33 +1,31 @@
-/// <reference path="../../../typings/angular2-meteor.d.ts" />
+/// <reference path="../../../typings/all.d.ts" />
 
-import {Component, NgZone, View, Inject} from 'angular2/angular2';
+import {Component, NgZone, View, Inject, ElementRef} from 'angular2/angular2';
 import {ROUTER_PROVIDERS, Router} from 'angular2/router';
-//import {Http, HTTP_PROVIDERS} from 'angular2/http'; //no http in my build, have to use fetch :|
-declare var fetch;
 
 import {UserService} from '../user/userService';
+import {AnimatedView} from "../animatedView";
 
 
 @Component({
-    selector: 'authorization',
-    providers: [UserService]
+    selector: '.animated-view',
 })
 @View({
     templateUrl: 'client/src/authorization/authorization.ng.html',
     styleUrls: ['client/src/authorization/authorization-card.css'],
 })
-export class Authorization {
-    //helper for animation - remove in future
-    public fadeOut:boolean;
-    public fadeIn:boolean;
-
+export class Authorization extends AnimatedView {
     public processing:boolean;
+    private user: UserService;
     private slackAuthOptions:Meteor.LoginWithExternalServiceOptions;
 
-    constructor(private zone:NgZone, private router:Router, private user:UserService) {
+    constructor(private zone:NgZone, private elementRef:ElementRef, private router:Router, UserService:UserService) {
+        super(elementRef, {
+            activate: "transition.bounceLeftIn",
+            deactivate: "transition.bounceRightOut"
+        });
         this.processing = false;
-        this.fadeOut = false;
-        this.user = new UserService();
+        this.user = UserService;
         this.slackAuthOptions = {
             requestPermissions: ['identify', 'read'],
             requestOfflineToken: true,
@@ -36,36 +34,29 @@ export class Authorization {
         };
     }
     onActivate(){
-        this.fadeIn = true;
-        setTimeout(()=>{
-            this.fadeIn = false;
+        super.onActivate().then(()=>{
             var u = Meteor.user();
-            if(u) this.signin(u);
-        }, 1100);
-    }
-    onDeactivate(){
-        return new Promise((resolve)=>{
-            this.fadeOut = true;
-            setTimeout(resolve, 1100);
+            if(u){
+                this.autologin(u); //autologin
+            }
         });
     }
 
-    signin(user){
+    /**********************************
+     *              METHODS
+     **********************************/
+
+    autologin(user){
         this.processing = true;
         this.zone.runOutsideAngular(() => {
-            fetch('https://slack.com/api/users.info?+' + `token=${user.services.slack.accessToken}&user=${user.services.slack.id}`)
-                .then(r => r.json())
-                .then(data => {
-                    this.zone.run(()=>{
+            setTimeout(()=> {
+                this.user.authWithSlack(user).then(()=> {
+                    this.zone.run(()=> {
                         this.processing = false;
-                        this.user.signin({
-                            email: data.user.profile.email,
-                            name: data.user.profile.real_name,
-                            image: data.user.profile.image_original
-                        });
                         this.router.navigate(['/UserDetails']);
                     });
                 });
+            }, 2000);
         });
     }
 
@@ -74,7 +65,7 @@ export class Authorization {
         Meteor.loginWithSlack(this.slackAuthOptions, ()=> {
             var user = Meteor.user();
             if(user){
-                this.signin(user);
+                this.autologin(user);
             }
         });
     }

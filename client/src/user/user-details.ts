@@ -1,28 +1,61 @@
-/// <reference path="../../../typings/angular2-meteor.d.ts" />
+/// <reference path="../../../typings/all.d.ts" />
 
-import {Component, View, NgFor} from 'angular2/angular2';
-import {RouterLink} from 'angular2/router';
+
+import {Component, View, NgFor, Inject, NgIf, NgStyle, ElementRef} from 'angular2/angular2';
+import {ROUTER_PROVIDERS, RouterLink, Router} from 'angular2/router';
+
 import {UserService} from '../user/userService';
-
+import {AnimatedView} from '../animatedView';
+import {IProfile} from "./userService";
 
 @Component({
-    selector: 'user-details',
-    providers: [UserService]
+    selector: '.animated-view',
 })
 @View({
     templateUrl: 'client/src/user/user-details.ng.html',
-    directives: [NgFor, RouterLink]
+    directives: [NgFor, RouterLink, NgIf, NgStyle]
 })
-export class UserDetails {
-    public fadeIn:boolean;
-    public fadeOut:boolean;
+export class UserDetails extends AnimatedView {
+    public user: UserService;
+    public profile: IProfile;
 
-    constructor(public user:UserService) {
-
+    constructor(private router:Router, private elementRef:ElementRef, UserService:UserService) {
+        super(elementRef,{
+            activate: "transition.flipXIn",
+            deactivate: "transition.flipXOut"
+        });
+        this.profile = null;
+        this.user = UserService;
+    }
+    onActivate(){
+        if(!this.user.isAuth){
+            var u = Meteor.user();
+            if(u){
+                this.user.authWithSlack(u).then(()=>{
+                    super.onActivate();
+                    this.profile = this.user.profile;
+                }); //autologin
+            }
+            else {
+                this.router.navigate(['/Authorization']);
+            }
+        } else {
+            super.onActivate();
+            this.profile = this.user.profile;
+        }
     }
 
-    onActivate(){
-        this.fadeIn = true;
-        setTimeout(()=>this.fadeIn=false, 1100);
+    /**********************************
+     *              METHODS
+     **********************************/
+
+    ready(){
+        console.log('ready');
+    }
+
+    logout(){
+        Meteor.logout(()=>{
+            this.router.navigate(['/Authorization']);
+        });
     }
 }

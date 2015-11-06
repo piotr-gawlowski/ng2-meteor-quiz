@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/angular2-meteor.d.ts" />
+/// <reference path="../../../typings/all.d.ts" />
 
 import {Component, View, NgFor} from 'angular2/angular2';
 import {RouterLink} from 'angular2/router';
@@ -13,9 +13,9 @@ import {Games} from '../../../collections/games';
     directives: [NgFor, RouterLink]
 })
 export class GamesList {
-    parties: Mongo.Cursor<Object>;
+    games: Mongo.Cursor<any>;
 
     constructor() {
-        this.parties = Games.find();
+        this.games = Games.find();
     }
 }

@@ -1,4 +1,4 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
+/// <reference path="../typings/all.d.ts" />
 
 import {Component, View} from 'angular2/angular2';
 import {bootstrap} from 'angular2-meteor';
@@ -8,6 +8,7 @@ import {GamesList} from './src/games-list/games-list';
 import {Authorization} from './src/authorization/authorization';
 import {AuthorizedOutlet} from "./src/authorization/autorizedOutlet";
 import {UserDetails} from './src/user/user-details';
+import {UserService} from './src/user/userService';
 
 @Component({
     selector: 'app',
@@ -35,4 +36,4 @@ import {UserDetails} from './src/user/user-details';
 ])
 class Quiz {}
 
-bootstrap(Quiz, [ROUTER_PROVIDERS]);
+bootstrap(Quiz, [ROUTER_PROVIDERS, UserService]);

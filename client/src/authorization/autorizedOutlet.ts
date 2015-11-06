@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/angular2-meteor.d.ts" />
+/// <reference path="../../../typings/all.d.ts" />
 
 import {Directive, Attribute, ElementRef, DynamicComponentLoader} from 'angular2/angular2';
 import {Router, RouterOutlet, ComponentInstruction} from 'angular2/router';

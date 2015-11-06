@@ -21,3 +21,4 @@ service-configuration
 fourseven:scss
 accounts-oauth
 accounts-base
+percolate:velocityjs

@@ -1,8 +1,9 @@
-<div style="display: flex">
-    <div class="card card-raised card-center col-xs-12 col-sm-6 col-lg-4" [class.fadeout]="fadeOut" [class.fadein]="fadeIn">
-        <img class="img-responsive" src="/img/slack_rgb.png" alt="Slack">
-        <div class="card-block">
-            <pre>{{user.profile}}</pre>
-        </div>
+<div class="card card-raised profile-card" *ng-if="profile">
+    <div class="avatar" [style.background-image]="'url(' + profile.image + ')'"></div>
+    <div class="card-block" style="text-align: center">
+        <h5>Hi!</h5>
+        <h2>{{profile.name}}</h2>
+        <button style="margin-top: 3rem" [disabled]="processing" (click)="ready()" class="btn btn-primary">I'm ready</button>
+        <button style="margin-top: 0.5rem" (click)="logout()" class="btn btn-default">Logout</button>
     </div>
 </div>

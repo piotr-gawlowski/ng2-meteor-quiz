@@ -20,5 +20,25 @@ $border-radius-lg:    .2rem;
 body {
   background: $green;
   font-family: 'Roboto', sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
+  min-height: 100vh;
+
+  /*
+  background: rgba(85,181,125,1);
+  background: -moz-radial-gradient(center, ellipse cover, rgba(85,181,125,1) 0%, rgba(71,174,116,1) 41%, rgba(71,125,94,1) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(85,181,125,1)), color-stop(41%, rgba(71,174,116,1)), color-stop(100%, rgba(71,125,94,1)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(85,181,125,1) 0%, rgba(71,174,116,1) 41%, rgba(71,125,94,1) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(85,181,125,1) 0%, rgba(71,174,116,1) 41%, rgba(71,125,94,1) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(85,181,125,1) 0%, rgba(71,174,116,1) 41%, rgba(71,125,94,1) 100%);
+  background: radial-gradient(ellipse at center, rgba(85,181,125,1) 0%, rgba(71,174,116,1) 41%, rgba(71,125,94,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55b57d', endColorstr='#477d5e', GradientType=1 );
+  */
+}
+
+
+.animated-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
 }

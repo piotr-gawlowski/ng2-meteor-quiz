@@ -1,28 +1,29 @@
 @import "./constants";
 
-
 .card {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   background: #fff;
   border:none;
-  transition: box-shadow $timing-short ease, left 1s $anim;
-  .card-block {
-
-  }
-
+  transition: box-shadow $timing-short ease;
+  flex: 1;
   &.card-raised {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   }
-  &.card-center {
-    margin: 0 auto;
-    top: 15vh; left: 0;
+
+  max-width: 90%;
+  @media (min-width: map-get($container-max-widths, 'md')) {
+    max-width: 60%;
+  }
+  @media (min-width: map-get($container-max-widths, 'lg')) {
+    max-width: 35%;
   }
 
-
-  &.fadeout {
-    left: -100vw;
-  }
-  &.fadein {
-    left: 100vw;
+  .avatar {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background-size: cover;
+    margin: 1rem auto;
+    position: relative;
   }
 }
